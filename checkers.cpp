@@ -52,10 +52,12 @@ void show(Checkers** arr, int row, int column) {
 	cout << "\n\n";
 }
 void rules() {
-	cout << "1.Простые шашки ходят только вперёд,но может бить назад" << endl;
-	cout << "2.дамка может ходить на любое число полей" << endl;
+	cout << "1.Простые шашки ходят только вперёд" << endl;
+	cout << "2.но может бить назад, дамка может ходить на любое число полей" << endl;
 	cout << "3.цель игры - съесть или запереть все шашки противника" << endl;
 	cout << "4.бить можно произвольное количество шашек в любых направлениях" << endl;
+	cout << "5.дамка может ходить по диагонали в любую клетку" << endl;
+
 
 }
 void queen(Checkers** arr, int row, int column) {
@@ -83,8 +85,38 @@ int gameRowToInt(char gameRow) {
 	else if (gameRow == 104) return 7;
 
 }
+void needForAnAttack(Checkers** arr, int row, int column, char gameRow, int gameColumn) {
+	if (player == true)
+	{
+		for (int i = 0; i < row; i++)
+		{
+			for (int i = 0; i < column; i++)
+			{
+				if (arr[gameRowToInt(gameRow + 1)][gameColumn - 2].stateOfTheCell == black)cout << "необходимо съeсть шашку для того чтобы продолжить игру" << endl;
+				else if (arr[gameRowToInt(gameRow - 1)][gameColumn - 2].stateOfTheCell == black)cout << "необходимо съeсть шашку для того чтобы продолжить игру" << endl;
+				else if (arr[gameRowToInt(gameRow + 1)][gameColumn + 2].stateOfTheCell == black)cout << "необходимо съeсть шашку для того чтобы продолжить игру" << endl;
+				else if (arr[gameRowToInt(gameRow - 1)][gameColumn + 2].stateOfTheCell == black)cout << "необходимо съeсть шашку для того чтобы продолжить игру" << endl;
+			}
+		}
+	}
+	else if (player == false)
+	{
+		for (int i = 0; i < row; i++)
+		{
+			for (int i = 0; i < column; i++)
+			{
+				if (arr[gameRowToInt(gameRow + 1)][gameColumn - 2].stateOfTheCell == white)cout << "необходимо съeсть шашку для того чтобы продолжить игру" << endl;
+				else if (arr[gameRowToInt(gameRow - 1)][gameColumn - 2].stateOfTheCell == white)cout << "необходимо съeсть шашку для того чтобы продолжить игру" << endl;
+				else if (arr[gameRowToInt(gameRow + 1)][gameColumn + 2].stateOfTheCell == white)cout << "необходимо съeсть шашку для того чтобы продолжить игру" << endl;
+				else if (arr[gameRowToInt(gameRow - 1)][gameColumn + 2].stateOfTheCell == white)cout << "необходимо съeсть шашку для того чтобы продолжить игру" << endl;
+			}
+		}
+	}
+
+}
+
 //int сanAPawnWalk( char gameRow, int gameColumn, char nowRow, int nowColumn) {
-//	if ((gameRow + 1 |gameRow - 1) == nowRow && nowColumn == (gameColumn + 1 | gameColumn - 1))
+//	if ((gameRow + 1 |gameRow - 1) == nowRow && nowColumn == (gameColumn + 1 | gameColumn - 2))
 //	{
 //		return 1;
 //	}
@@ -103,29 +135,29 @@ void pawnWalk(Checkers**& arr, int row, int column, char gameRow, int gameColumn
 			arr[gameRowToInt(nowRow)][nowColumn - 1].stateOfTheCell = '.';
 			arr[gameRowToInt(nowRow)][nowColumn - 1].absence = false;
 			player = !player;
-			if (arr[gameRowToInt(gameRow + 1)][gameColumn - 1].stateOfTheCell == black) {
-				arr[gameRowToInt(gameRow + 1)][gameColumn - 1].stateOfTheCell = '.';
-				arr[gameRowToInt(gameRow + 1)][gameColumn - 1].absence = false;
+			if (arr[gameRowToInt(gameRow + 1)][gameColumn - 2].stateOfTheCell == black) {
+				arr[gameRowToInt(gameRow + 1)][gameColumn - 2].stateOfTheCell = '.';
+				arr[gameRowToInt(gameRow + 1)][gameColumn - 2].absence = false;
 				wCapturedCheckers += 1;
-				cout << "yeees";
+			
 			}
-			else if (arr[gameRowToInt(gameRow - 1)][gameColumn - 1].stateOfTheCell == black) {
-				arr[gameRowToInt(gameRow - 1)][gameColumn - 1].stateOfTheCell = '.';
-				arr[gameRowToInt(gameRow - 1)][gameColumn - 1].absence = false;
+			else if (arr[gameRowToInt(gameRow - 1)][gameColumn - 2].stateOfTheCell == black) {
+				arr[gameRowToInt(gameRow - 1)][gameColumn - 2].stateOfTheCell = '.';
+				arr[gameRowToInt(gameRow - 1)][gameColumn - 2].absence = false;
 				wCapturedCheckers += 1;
-				cout << "yees";
+			
 			}
-			else if (arr[gameRowToInt(gameRow + 1)][gameColumn + 1].stateOfTheCell == black) {
-				arr[gameRowToInt(gameRow + 1)][gameColumn + 1].stateOfTheCell = '.';
-				arr[gameRowToInt(gameRow + 1)][gameColumn + 1].absence = false;
+			else if (arr[gameRowToInt(gameRow + 1)][gameColumn + 2].stateOfTheCell == black) {
+				arr[gameRowToInt(gameRow + 1)][gameColumn + 2].stateOfTheCell = '.';
+				arr[gameRowToInt(gameRow + 1)][gameColumn + 2].absence = false;
 				wCapturedCheckers += 1;
-				cout << "yeees";
+				
 			}
-			else if (arr[gameRowToInt(gameRow - 1)][gameColumn + 1].stateOfTheCell == black) {
-				arr[gameRowToInt(gameRow - 1)][gameColumn + 1].stateOfTheCell = '.';
-				arr[gameRowToInt(gameRow - 1)][gameColumn + 1].absence = false;
+			else if (arr[gameRowToInt(gameRow - 1)][gameColumn + 2].stateOfTheCell == black) {
+				arr[gameRowToInt(gameRow - 1)][gameColumn + 2].stateOfTheCell = '.';
+				arr[gameRowToInt(gameRow - 1)][gameColumn + 2].absence = false;
 				wCapturedCheckers += 1;
-				cout << "yees";
+			
 			}
 		}
 		else if (arr[gameRowToInt(gameRow)][gameColumn - 1].absence == true) cout << " клетка в которую вы хотите переместить шашку уже заната!" << endl;
@@ -139,29 +171,29 @@ void pawnWalk(Checkers**& arr, int row, int column, char gameRow, int gameColumn
 			arr[gameRowToInt(nowRow)][nowColumn - 1].stateOfTheCell = '.';
 			arr[gameRowToInt(nowRow)][nowColumn - 1].absence = false;
 			player = !player;
-			if (arr[gameRowToInt(gameRow + 1)][gameColumn - 1].stateOfTheCell == white) {
-				arr[gameRowToInt(gameRow + 1)][gameColumn - 1].stateOfTheCell = '.';
-				arr[gameRowToInt(gameRow + 1)][gameColumn - 1].absence = false;
-				wCapturedCheckers += 1;
-				cout << "yeees";
+			if (arr[gameRowToInt(gameRow + 1)][gameColumn - 2].stateOfTheCell == white) {
+				arr[gameRowToInt(gameRow + 1)][gameColumn - 2].stateOfTheCell = '.';
+				arr[gameRowToInt(gameRow + 1)][gameColumn - 2].absence = false;
+				bCapturedCheckers += 1;
+			
 			}
-			else if (arr[gameRowToInt(gameRow - 1)][gameColumn - 1].stateOfTheCell == white) {
-				arr[gameRowToInt(gameRow - 1)][gameColumn - 1].stateOfTheCell = '.';
-				arr[gameRowToInt(gameRow - 1)][gameColumn - 1].absence = false;
-				wCapturedCheckers += 1;
-				cout << "yees";
+			else if (arr[gameRowToInt(gameRow - 1)][gameColumn - 2].stateOfTheCell == white) {
+				arr[gameRowToInt(gameRow - 1)][gameColumn - 2].stateOfTheCell = '.';
+				arr[gameRowToInt(gameRow - 1)][gameColumn - 2].absence = false;
+				bCapturedCheckers += 1;
+				
 			}
-			else if (arr[gameRowToInt(gameRow + 1)][gameColumn + 1].stateOfTheCell == white) {
-				arr[gameRowToInt(gameRow + 1)][gameColumn + 1].stateOfTheCell = '.';
-				arr[gameRowToInt(gameRow + 1)][gameColumn + 1].absence = false;
-				wCapturedCheckers += 1;
-				cout << "yeees";
+			else if (arr[gameRowToInt(gameRow + 1)][gameColumn + 2].stateOfTheCell == white) {
+				arr[gameRowToInt(gameRow + 1)][gameColumn + 2].stateOfTheCell = '.';
+				arr[gameRowToInt(gameRow + 1)][gameColumn + 2].absence = false;
+				bCapturedCheckers += 1;
+				
 			}
-			else if (arr[gameRowToInt(gameRow - 1)][gameColumn + 1].stateOfTheCell == white) {
-				arr[gameRowToInt(gameRow - 1)][gameColumn + 1].stateOfTheCell = '.';
-				arr[gameRowToInt(gameRow - 1)][gameColumn + 1].absence = false;
-				wCapturedCheckers += 1;
-				cout << "yees";
+			else if (arr[gameRowToInt(gameRow - 1)][gameColumn + 2].stateOfTheCell == white) {
+				arr[gameRowToInt(gameRow - 1)][gameColumn + 2].stateOfTheCell = '.';
+				arr[gameRowToInt(gameRow - 1)][gameColumn + 2].absence = false;
+				bCapturedCheckers += 1;
+	
 			}
 		}
 		else if (arr[gameRowToInt(gameRow)][gameColumn - 1].absence == true) cout << " клетка в которую вы хотите переместить шашку уже заната!" << endl;
@@ -170,8 +202,9 @@ void pawnWalk(Checkers**& arr, int row, int column, char gameRow, int gameColumn
 void game(Checkers**& arr, int row, int column) {
 
 
-	while (wCapturedCheckers != 8 || bCapturedCheckers != 8)
+	while (wCapturedCheckers != 12 || bCapturedCheckers != 12)
 	{
+		
 		show(arr, row, column);
 		char gameRow, nowRow;
 		int gameColumn, nowColumn;
@@ -187,34 +220,19 @@ void game(Checkers**& arr, int row, int column) {
 		//if (сanAPawnWalk(gameRow, gameColumn, nowRow, nowColumn) == 1)
 		//{
 		pawnWalk(arr, row, column, gameRow, gameColumn, nowRow, nowColumn);
+		needForAnAttack(arr, row, column, gameRow, gameColumn);
 		queen(arr, row, column);
 		//}
 		//else cout << "возможно вы не правельно ввели знвчение попробуйте еще раз!" << endl;
-
+		system("cls");
+		
 
 	}
+	if (wCapturedCheckers == 12) cout << "ВЫИГРАЛ ИГРОК С БЕЛЫМИ ШАШКАМИ!";
+	else if (bCapturedCheckers == 12) cout << "ВЫИГРАЛ ИГРОК С ЧЕРНЫМИ ШАШКАМИ!";
 }
 
-void needForAnAttack(Checkers** arr, int row, int column) {
-	if (player == true)
-	{
-		for (int i = 0; i < row; i++)
-		{
-			for (int i = 0; i < column; i++)
-			{
-				/*if ()
-				{
 
-				}*/
-			}
-		}
-	}
-	else if (player == false)
-	{
-
-	}
-
-}
 
 
 int main()
