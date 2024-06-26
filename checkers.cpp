@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include<Windows.h>
 #include<string>
 #include<fstream>
@@ -14,9 +14,9 @@ int bCapturedCheckers = 0;
 struct Checkers {
 	char stateOfTheCell = 46;
 	char queen;
-	bool absence =false; // false - в клетке нет шашки , true - в клетке есть шашка
-	Checkers(){}
-	Checkers(char stateOfTheCell, char queen,bool absence):stateOfTheCell(stateOfTheCell), queen(queen), absence(absence) {}
+	bool absence = false; // false - в клетке нет шашки , true - в клетке есть шашка
+	Checkers() {}
+	Checkers(char stateOfTheCell, char queen, bool absence) :stateOfTheCell(stateOfTheCell), queen(queen), absence(absence) {}
 };
 void initialization(Checkers**& arr, int row, int column) {
 	int var = 2;
@@ -24,7 +24,7 @@ void initialization(Checkers**& arr, int row, int column) {
 	{
 		for (int j = 0; j < column; j++)
 		{
-			if (var % 2 == 0 && (i == 0 || i == 1 || i == 2)){
+			if (var % 2 == 0 && (i == 0 || i == 1 || i == 2)) {
 				arr[i][j].stateOfTheCell = black;
 				arr[i][j].absence = true;
 			}
@@ -41,22 +41,22 @@ void show(Checkers** arr, int row, int column) {
 	char count = 97;
 	for (int i = 0; i < row; i++)
 	{
-		cout << count++<<" |";
+		cout << count++ << " |";
 		for (int j = 0; j < column; j++)
 		{
 			cout << ' ' << arr[i][j].stateOfTheCell << ' ' << '|';
 		}
-		cout << endl << "-----------------------------------"<<endl;
+		cout << endl << "-----------------------------------" << endl;
 	}
-	cout <<"    " << 1 << " | " << 2 << " | " << 3 << " | " << 4 << " | " << 5 << " | " << 6 << " | " << 7 << " | " << 8 << " | ";
+	cout << "    " << 1 << " | " << 2 << " | " << 3 << " | " << 4 << " | " << 5 << " | " << 6 << " | " << 7 << " | " << 8 << " | ";
 	cout << "\n\n";
- }
+}
 void rules() {
 	cout << "1.Простые шашки ходят только вперёд" << endl;
-	cout << "" << endl;
-	cout << "" << endl;
-	cout << "" << endl;
-	cout << "" << endl;
+	cout << "2.но может бить назад, дамка может ходить на любое число полей" << endl;
+	cout << "3.цель игры - съесть или запереть все шашки противника" << endl;
+	cout << "4.бить можно произвольное количество шашек в любых направлениях" << endl;
+	cout << "5.дамка может ходить по диагонали в любую клетку" << endl;
 
 
 }
@@ -94,7 +94,7 @@ int gameRowToInt(char gameRow) {
 //
 //
 //}
-void pawnWalk(Checkers**& arr, int row, int column, char gameRow,int gameColumn,char nowRow,int nowColumn) {
+void pawnWalk(Checkers**& arr, int row, int column, char gameRow, int gameColumn, char nowRow, int nowColumn) {
 
 	if (player == true)
 	{
@@ -104,7 +104,8 @@ void pawnWalk(Checkers**& arr, int row, int column, char gameRow,int gameColumn,
 			arr[gameRowToInt(gameRow)][gameColumn - 1].stateOfTheCell = white;
 			arr[gameRowToInt(nowRow)][nowColumn - 1].stateOfTheCell = '.';
 			arr[gameRowToInt(nowRow)][nowColumn - 1].absence = false;
-			if (arr[gameRowToInt(gameRow + 1)][gameColumn - 1].stateOfTheCell == black ) {
+			player = !player;
+			if (arr[gameRowToInt(gameRow + 1)][gameColumn - 1].stateOfTheCell == black) {
 				arr[gameRowToInt(gameRow + 1)][gameColumn - 1].stateOfTheCell = '.';
 				arr[gameRowToInt(gameRow + 1)][gameColumn - 1].absence = false;
 				wCapturedCheckers += 1;
@@ -140,11 +141,35 @@ void pawnWalk(Checkers**& arr, int row, int column, char gameRow,int gameColumn,
 			arr[gameRowToInt(nowRow)][nowColumn - 1].stateOfTheCell = '.';
 			arr[gameRowToInt(nowRow)][nowColumn - 1].absence = false;
 			player = !player;
+			if (arr[gameRowToInt(gameRow + 1)][gameColumn - 1].stateOfTheCell == white) {
+				arr[gameRowToInt(gameRow + 1)][gameColumn - 1].stateOfTheCell = '.';
+				arr[gameRowToInt(gameRow + 1)][gameColumn - 1].absence = false;
+				wCapturedCheckers += 1;
+				cout << "yeees";
+			}
+			else if (arr[gameRowToInt(gameRow - 1)][gameColumn - 1].stateOfTheCell == white) {
+				arr[gameRowToInt(gameRow - 1)][gameColumn - 1].stateOfTheCell = '.';
+				arr[gameRowToInt(gameRow - 1)][gameColumn - 1].absence = false;
+				wCapturedCheckers += 1;
+				cout << "yees";
+			}
+			else if (arr[gameRowToInt(gameRow + 1)][gameColumn + 1].stateOfTheCell == white) {
+				arr[gameRowToInt(gameRow + 1)][gameColumn + 1].stateOfTheCell = '.';
+				arr[gameRowToInt(gameRow + 1)][gameColumn + 1].absence = false;
+				wCapturedCheckers += 1;
+				cout << "yeees";
+			}
+			else if (arr[gameRowToInt(gameRow - 1)][gameColumn + 1].stateOfTheCell == white) {
+				arr[gameRowToInt(gameRow - 1)][gameColumn + 1].stateOfTheCell = '.';
+				arr[gameRowToInt(gameRow - 1)][gameColumn + 1].absence = false;
+				wCapturedCheckers += 1;
+				cout << "yees";
+			}
 		}
 		else if (arr[gameRowToInt(gameRow)][gameColumn - 1].absence == true) cout << " клетка в которую вы хотите переместить шашку уже заната!" << endl;
 	}
 }
-void game(Checkers**& arr,int row,int column) {
+void game(Checkers**& arr, int row, int column) {
 
 
 	while (wCapturedCheckers != 8 || bCapturedCheckers != 8)
@@ -163,16 +188,16 @@ void game(Checkers**& arr,int row,int column) {
 		cin >> gameColumn;
 		//if (сanAPawnWalk(gameRow, gameColumn, nowRow, nowColumn) == 1)
 		//{
-			pawnWalk(arr, row, column, gameRow, gameColumn, nowRow, nowColumn);
-			queen(arr, row, column);
+		pawnWalk(arr, row, column, gameRow, gameColumn, nowRow, nowColumn);
+		queen(arr, row, column);
 		//}
 		//else cout << "возможно вы не правельно ввели знвчение попробуйте еще раз!" << endl;
-		
+
 
 	}
 }
 
-void needForAnAttack(Checkers ** arr,int row,int column) {
+void needForAnAttack(Checkers** arr, int row, int column) {
 	if (player == true)
 	{
 		for (int i = 0; i < row; i++)
@@ -197,22 +222,21 @@ void needForAnAttack(Checkers ** arr,int row,int column) {
 int main()
 {
 	setlocale(LC_ALL, "rus");
-	 int row = 8, column = 8;
+	int row = 8, column = 8;
 	Checkers** damBrod = new Checkers * [row];
 	for (int i = 0; i < row; i++)
 	{
-		damBrod[i] = new Checkers[column]; 
+		damBrod[i] = new Checkers[column];
 	}
 	initialization(damBrod, row, column);
-	
-	
+
+
 	int choice;
 	bool work = true;
 	while (work)
 	{
 		cout << endl << "Правила : 1" << endl;
 		cout << "Начать новую игру : 2 " << endl;
-		cout << "Проолжить игру : 3" <<endl;
 		cin >> choice;
 		switch (choice)
 		{
@@ -226,22 +250,7 @@ int main()
 		}
 		case 2: {
 			game(damBrod, row, column);
-			/*show(damBrod, row, column);
-			cout << wQueen << ' ' << bQueen;
-			char gameRow,nowRow;
-			int gameColumn,nowColumn;
-			cout << "Введите букву ряда, той шашки которой хотите сходить:" << endl;
-			cin >> nowRow;
-			cout << "Введите номер колонны, той шашки которой хотите сходить:" << endl;
-			cin >> nowColumn;
-		
-			cout << "Введите букву ряда, той клетки куда хотите перемести шашку:" << endl;
-			cin >> gameRow;
-			cout << "Введите номер колонны, той клетки куда хотите перемести шашку:" << endl;
-			cin >> gameColumn;
-			pawnWalk(damBrod, row, column, gameRow, gameColumn, nowRow, nowColumn);
-			queen(damBrod, row, column);
-			show(damBrod, row, column);*/
+			break;
 		}
 		default:
 			break;
