@@ -159,6 +159,7 @@ void pawnWalk(Checkers**& arr, int row, int column, char gameRow, int gameColumn
 				wCapturedCheckers += 1;
 			
 			}
+
 		}
 		else if (arr[gameRowToInt(gameRow)][gameColumn - 1].absence == true) cout << " клетка в которую вы хотите переместить шашку уже заната!" << endl;
 	}
