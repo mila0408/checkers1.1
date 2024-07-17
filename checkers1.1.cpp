@@ -101,12 +101,12 @@ void changeTheQueen(Checkers** &arr, char gameRow, int gameColumn, char nowRow, 
 	if (player == true){
 		arr[gameRowToInt(nowRow)][nowColumn - 1].queen = false;
 		arr[gameRowToInt(gameRow)][gameColumn - 1].queen = true;
-		arr[gameRowToInt(gameRow)][gameColumn - 1].stateOfTheCell == wQueen;
+		arr[gameRowToInt(gameRow)][gameColumn - 1].stateOfTheCell = wQueen;
 	}
 	else if (player == false) {
 		arr[gameRowToInt(nowRow)][nowColumn - 1].queen = false;
 		arr[gameRowToInt(gameRow)][gameColumn - 1].queen = true;
-		arr[gameRowToInt(gameRow)][gameColumn - 1].stateOfTheCell == bQueen;
+		arr[gameRowToInt(gameRow)][gameColumn - 1].stateOfTheCell = bQueen;
 
 	}
  }
